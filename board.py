@@ -1,20 +1,20 @@
+from pawn import *
+from tile import *
+
 class board():
     def __init__(self,nb_lignes,nb_colonnes):
         self.__nb_lignes = nb_lignes
         self.__nb_colonnes = nb_colonnes
         #self.__board = [[0] * self.__nb_colonnes] * self.__nb_colonnes
+               
         self.__board = [0] * nb_colonnes
         for i in range(nb_colonnes):
             self.__board[i] = [0] * nb_lignes
 
+
     def add_pawn(self,x,y,color):
         pass
 
-    
-    def reverse_pawn(self,liste):
-        for i in liste :
-            i.reverse_pawn()
-        pass
 
     def __str__(self):
         code = 65
@@ -34,7 +34,7 @@ class board():
 
 
 m= board(8,8)
-
+m.add_pawn(1,1,'o')
 print(m)
 
 
