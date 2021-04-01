@@ -1,12 +1,13 @@
 from othello.board import Board
+from othello.common import constants
 
 
 class Engine:
     def __init__(self):
-        self.nb_colonnes = 8
-        self.nb_lignes = 8
+        self.nb_colonnes = constant.number_of_files
+        self.nb_lignes = constant.number_of_ranks
         self.board = Board(self.nb_lignes, self.nb_colonnes)
-        self.active_player = 'o'
+        self.active_player = symbol_black
 
     def start_game(self):
         '''
@@ -22,19 +23,19 @@ class Engine:
         '''
         Sets initial board configuration
         '''
-        self.board.add_pawn(4, 4, 'o')
-        self.board.add_pawn(4, 5, '*')
-        self.board.add_pawn(5, 4, '*')
-        self.board.add_pawn(5, 5, 'o')
+        self.board.add_pawn(4, 4, constants.symbol_black)
+        self.board.add_pawn(4, 5, constants.symbol_white)
+        self.board.add_pawn(5, 4, constants.symbol_black)
+        self.board.add_pawn(5, 5, constants.symbol_white)
 
     def switch_player(self):
         '''
         Change le joueur actif
         '''
-        if self.active_player == 'o':
-            self.active_player = '*'
+        if self.active_player == symbol_black:
+            self.active_player = symbol_white
         else:
-            self.active_player = '*'
+            self.active_player = symbol_black
 
     def print_board(self):
         '''

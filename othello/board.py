@@ -1,4 +1,4 @@
-from othello.pawn import pawn
+from othello.pawn import Pawn
 from othello.tile import Tile
 
 
@@ -88,7 +88,7 @@ class Board():
         '''
         pass
 
-    def get_pawn(self, x, y) -> pawn:
+    def get_pawn(self, x, y) -> Pawn:
         '''
         Renvoie le pion sur la case x,y (exception 
         si la case n'a pas de pion)
