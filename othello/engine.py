@@ -4,10 +4,10 @@ from othello.common import constants
 
 class Engine:
     def __init__(self):
-        self.nb_colonnes = constant.number_of_files
-        self.nb_lignes = constant.number_of_ranks
+        self.nb_colonnes = constants.number_of_files
+        self.nb_lignes = constants.number_of_ranks
         self.board = Board(self.nb_lignes, self.nb_colonnes)
-        self.active_player = symbol_black
+        self.active_player = constants.symbol_black
 
     def start_game(self):
         '''
@@ -32,10 +32,10 @@ class Engine:
         '''
         Change le joueur actif
         '''
-        if self.active_player == symbol_black:
-            self.active_player = symbol_white
+        if self.active_player == constants.symbol_black:
+            self.active_player = constants.symbol_white
         else:
-            self.active_player = symbol_black
+            self.active_player = constants.symbol_black
 
     def print_board(self):
         '''
@@ -157,7 +157,7 @@ class Engine:
         for tile in empty_tiles:
             flips = self.get_flips(tile.get_coordonates())
             if len(flips) > 0:
-                possible_moves.append((x, y))
+                possible_moves.append((tile.get_coordonates()))
         return possible_moves
 
     def end_game(self):
