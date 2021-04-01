@@ -31,6 +31,50 @@ class board():
                 chaine += " " + str(self.__board[i][j]).replace("0"," ") +  " |"
             chaine += '\n' + ligne2
         return chaine
+    @staticmethod
+    def generate_display_matrix(position_matrix):
+        display_matrix=[[""] * 9 for i in range(9)]
+        for i in range(1,len(position_matrix)+1):
+            for j in range(1,len(position_matrix)+1):
+                display_matrix[i][j]=str(position_matrix[i-1][j-1])
+        return display_matrix
+
+    @staticmethod
+    def dstring(string, locval, indexes):
+        newstr= string[:indexes[locval[0]]]+(locval[1])+string[indexes[locval[0]]+1:]
+        return newstr
+
+    def display_board(self):
+        m=board.generate_display_matrix(self.__board)
+        nrows, ncols=len(m), len(m[0])
+        hline="--------"*(ncols)+"-"
+        colseps="|       "*(ncols)+"|"
+        valueprints="|   0   "*(ncols)+"|"
+        charlist=[chr(i) for i in range(ord('A'), ord('Z')+1)] #get a list [A, B, C...H]
+        col_names=[charlist[i] for i in range(ncols)]
+        indexes=[i for i in range(len(valueprints)) if valueprints.startswith('0', i)]
+        print(hline+"\n"+colseps)
+        newstr="|   0   "*(ncols)+"|"
+
+        for index in range(1,len(indexes)):
+            valueprints=valueprints[:indexes[index]]+col_names[index-1]+valueprints[indexes[index]+1:]
+        print(valueprints.replace("0"," ")+"\n"+colseps+"\n"+hline)
+        for ind in range(1,nrows):
+            print(colseps)
+            new=newstr[:indexes[0]]+str(ind)+newstr[indexes[0]+1:]
+            indbw=[ [i,val] for i, val in enumerate(m[ind]) if val!=""]
+            if indbw:
+                for locval in indbw:
+                    new = board.dstring(new, locval, indexes)
+            new=new.replace("0"," ")
+            new=new.replace("x","X")
+            new=new.replace("o","O")
+
+            print(new)            
+            print(colseps)
+            print(hline) 
+
+
 
     def has_pawn(self,x,y) -> bool:
         '''
