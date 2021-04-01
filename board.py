@@ -32,6 +32,19 @@ class board():
             chaine += '\n' + ligne2
         return chaine
 
+    def has_pawn(self,x,y) -> bool:
+        '''
+        Renvoie True si la case en x,y a un pion
+        '''
+        pass
+
+    def get_pawn(self,x,y) -> pawn:
+        '''
+        Renvoie le pion sur la case x,y (exception 
+        si la case n'a pas de pion)
+        '''
+        pass
+
 
 m= board(8,8)
 m.add_pawn(1,1,'o')
