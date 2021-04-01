@@ -10,10 +10,13 @@ class board():
         self.__board = [0] * nb_colonnes
         for i in range(nb_colonnes):
             self.__board[i] = [0] * nb_lignes
+        
 
 
     def add_pawn(self,x,y,color):
-        pass
+        board_matrix=self.__board
+        board_matrix[x][y]=color
+        self.__board=board_matrix 
 
 
     def __str__(self):
@@ -93,6 +96,8 @@ class board():
 
 m= board(8,8)
 m.add_pawn(1,1,'o')
-print(m)
+m.add_pawn(1,5,'x')
+#print(m)
+m.display_board()
 
 
