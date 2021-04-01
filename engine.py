@@ -173,11 +173,11 @@ class Engine:
 
 
 
-
-engine = Engine()
-# x, y = engine.get_input()
-# print(x)
-# print(y)
-engine.play_move()
-# lettre = 'a'
-# print(lettre.isalpha())
+if __name__ == "__main__":
+    engine = Engine()
+    # x, y = engine.get_input()
+    # print(x)
+    # print(y)
+    engine.play_move()
+    # lettre = 'a'
+    # print(lettre.isalpha())

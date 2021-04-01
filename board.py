@@ -100,10 +100,11 @@ class board():
         pass
 
 
-m= board(8,8)
-m.add_pawn(1,1,'o')
-m.add_pawn(1,5,'x')
-#print(m)
-m.display_board()
+if __name__ == "__main__":
+    m= board(8,8)
+    m.add_pawn(1,1,'o')
+    m.add_pawn(1,5,'x')
+    #print(m)
+    m.display_board()
 
 
