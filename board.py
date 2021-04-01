@@ -33,9 +33,10 @@ class board():
         return chaine
     @staticmethod
     def generate_display_matrix(position_matrix):
-        display_matrix=[[""] * 9 for i in range(9)]
-        for i in range(1,len(position_matrix)+1):
-            for j in range(1,len(position_matrix)+1):
+        nrows, ncols=len(position_matrix)+1, len(position_matrix[0])+1
+        display_matrix=[[""] * nrows for i in range(ncols)]
+        for i in range(1,nrows):
+            for j in range(1,ncols):
                 display_matrix[i][j]=str(position_matrix[i-1][j-1])
         return display_matrix
 
