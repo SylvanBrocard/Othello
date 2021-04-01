@@ -1,17 +1,16 @@
-from pawn import *
+from pawn import pawn
+
 
 class tile():
-    
-    def __init__(self,x,y):
-        self.__x = x
-        self.__y = y
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
         self.has_pawn = False
         self.pawn = None
-        
 
-    def get_coordonates():
-        return self.__x, self.__y
+    def get_coordonates(self):
+        return self.x, self.y
 
-
-    
-        
+    def add_pawn(self,color):
+        self.pawn = pawn(color)

@@ -126,7 +126,7 @@ class Engine:
                             or not self.valid_coords(x_search, y_search)
                         ):
                             search_finished = True
-                        if self.board.get_pawn(x_search, y_search).get_color() == self.active_player:
+                        elif self.board.get_pawn(x_search, y_search).color == self.active_player:
                             search_finished = True
                             flips.extend(line_flips)
                         else:
