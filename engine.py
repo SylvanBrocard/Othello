@@ -6,16 +6,35 @@ class Engine:
         self.nb_colonnes = 8
         self.nb_lignes = 8
         self.board = board(self.nb_lignes, self.nb_colonnes)
-        self.active_player = 'black'
+        self.active_player = 'o'
 
     def start_game(self):
         '''
         Démarre une partie.
         '''
+        self.initial_pawns()
         while not self.is_finished:
             self.play_move()
             self.switch_player()
         self.end_game()
+    
+    def initial_pawns(self):
+        '''
+        Sets initial board configuration
+        '''
+        self.board.add_pawn(4,4,'o')
+        self.board.add_pawn(4,5,'*')
+        self.board.add_pawn(5,4,'*')
+        self.board.add_pawn(5,5,'o')
+
+    def switch_player(self):
+        '''
+        Change le joueur actif
+        '''
+        if self.active_player=='o':
+            self.active_player='*'
+        else:
+            self.active_player='*'
 
     def print_board(self):
         '''
@@ -30,7 +49,7 @@ class Engine:
         valid = False
         while not valid:
             move = self.get_input()
-            valid = self.valid_move(move)
+            valid, move = self.valid_move(move)
             if valid:
                 valid = self.resolve_move(move)
 
@@ -66,7 +85,8 @@ class Engine:
         if not self.valid_coords(x, y):
             print("Oops!  That's outside the board.  Try again...")
             return False
-        return True
+        move = x, y
+        return True, move
 
     def resolve_move(self, move):
         '''
@@ -77,8 +97,8 @@ class Engine:
         if self.board.has_pawn(x, y):
             print("Oops!  There's already a pawn here.  Try again...")
             return False
-        self.board.add_pawn(x, y)
-        flips = self.get_flips(self, x, y)
+        self.board.add_pawn(x, y, self.active_player)
+        flips = self.get_flips(x, y)
         if len(flips) == 0:
             print("Oops!  That move doesn't flip any pawn.  Try again...")
             return False
@@ -106,7 +126,7 @@ class Engine:
                             or not self.valid_coords(x_search, y_search)
                         ):
                             search_finished = True
-                        if self.board.get_pawn(x_search, y_search).color == self.active_player:
+                        if self.board.get_pawn(x_search, y_search).get_color() == self.active_player:
                             search_finished = True
                             flips.extend(line_flips)
                         else:
@@ -115,13 +135,43 @@ class Engine:
         return flips
 
     def valid_coords(self, x, y):
+        '''
+        Vérifie que les coordonnées x, y sont dans le plateau
+        '''
         return 1 <= x <= self.nb_lignes and 1 <= y <= self.nb_colonnes
 
     def is_finished(self):
-        pass
+        '''
+        Détermine si la partie est terminée
+        '''
+        possible_moves=self.get_possible_moves()
+        return len(possible_moves) == 0
+
+    def get_possible_moves(self):
+        '''
+        Renvoie la liste des coups possibles pour le joueur actif
+        '''
+        empty_tiles=self.board.empty_tiles()
+        possible_moves = []
+        for tile in empty_tiles:
+            flips=self.get_flips(tile.get_coordonates())
+            if len(flips) > 0:
+                possible_moves.append((x,y))
+        return possible_moves
 
     def end_game(self):
-        pass
+        '''
+        Termine la partie
+        '''
+        black, white = self.board.count_pawns()
+        if black > white:
+            print("Black wins the game !")
+        elif white > black:
+            print("White wins the game !")
+        else:
+            print("Draw !")
+
+
 
 
 engine = Engine()
