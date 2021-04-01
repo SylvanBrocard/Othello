@@ -17,24 +17,24 @@ class Engine:
             self.play_move()
             self.switch_player()
         self.end_game()
-    
+
     def initial_pawns(self):
         '''
         Sets initial board configuration
         '''
-        self.board.add_pawn(4,4,'o')
-        self.board.add_pawn(4,5,'*')
-        self.board.add_pawn(5,4,'*')
-        self.board.add_pawn(5,5,'o')
+        self.board.add_pawn(4, 4, 'o')
+        self.board.add_pawn(4, 5, '*')
+        self.board.add_pawn(5, 4, '*')
+        self.board.add_pawn(5, 5, 'o')
 
     def switch_player(self):
         '''
         Change le joueur actif
         '''
-        if self.active_player=='o':
-            self.active_player='*'
+        if self.active_player == 'o':
+            self.active_player = '*'
         else:
-            self.active_player='*'
+            self.active_player = '*'
 
     def print_board(self):
         '''
@@ -115,7 +115,7 @@ class Engine:
             for direction_y in [-1, 0, 1]:
                 if not (direction_x == 0 and direction_y == 0):
                     search_finished = False
-                    line_flips=[]
+                    line_flips = []
                     x_search = x
                     y_search = y
                     while not search_finished:
@@ -144,19 +144,19 @@ class Engine:
         '''
         Détermine si la partie est terminée
         '''
-        possible_moves=self.get_possible_moves()
+        possible_moves = self.get_possible_moves()
         return len(possible_moves) == 0
 
     def get_possible_moves(self):
         '''
         Renvoie la liste des coups possibles pour le joueur actif
         '''
-        empty_tiles=self.board.empty_tiles()
+        empty_tiles = self.board.empty_tiles()
         possible_moves = []
         for tile in empty_tiles:
-            flips=self.get_flips(tile.get_coordonates())
+            flips = self.get_flips(tile.get_coordonates())
             if len(flips) > 0:
-                possible_moves.append((x,y))
+                possible_moves.append((x, y))
         return possible_moves
 
     def end_game(self):
@@ -170,7 +170,6 @@ class Engine:
             print("White wins the game !")
         else:
             print("Draw !")
-
 
 
 if __name__ == "__main__":
