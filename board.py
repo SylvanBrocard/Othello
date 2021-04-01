@@ -96,7 +96,7 @@ class Board():
         '''
         pass
 
-    def get_pawn(self, x, y) -> Pawn:
+    def get_pawn(self, x, y) -> pawn:
         '''
         Renvoie le pion sur la case x,y (exception 
         si la case n'a pas de pion)
@@ -108,13 +108,39 @@ class Board():
         Décompte les pions noirs et blancs
         '''
         pass
+        color_counter = Counter([pawn.color for pawn in self.get_all_pawns])
+        return Counter[constants.symbol_black], Counter[constants.symbol_white]
+
+    def get_all_pawns(self) -> list:
+        '''
+        Returns the list of all pawns
+        '''
+        return [
+            self.get_pawn(x,y)
+            for x in range(self.__nb_lignes)
+            for y in range(self.__nb_colonnes)
+            if self.has_pawn(x,y)
+            ]
 
     def empty_tiles(self) -> list:
+         '''
+         Renvoie la liste des tuiles vides
+         '''
+		pass
+        return [
+            self.get_tile(x,y)
+            for x in range(self.__nb_lignes)
         '''
-        Renvoie la liste des tuiles vides
-        '''
-        pass
-
+         Décompte les pions noirs et blancs
+         '''
+		pass
+        color_counter = Counter([pawn.color for pawn in self.get_all_pawns])
+        return Counter[constants.symbol_black], Counter[constants.symbol_white]
+            self.get_pawn(x,y)
+            for x in range(self.__nb_lignes)
+            for y in range(self.__nb_colonnes)
+            if self.has_pawn(x,y)
+            ]
 
 if __name__ == "__main__":
     m = board(8, 8)
