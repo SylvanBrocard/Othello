@@ -93,6 +93,12 @@ class board():
         '''
         pass
 
+    def count_pawns(self) -> int,int:
+        '''
+        Décompte les pions noirs et blancs
+        '''
+        pass
+
 
 m= board(8,8)
 m.add_pawn(1,1,'o')
