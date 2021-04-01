@@ -3,14 +3,22 @@ from othello.tile import Tile
 
 
 class Board():
-    def __init__(self, nb_lignes, nb_colonnes):
-        self.__nb_lignes = nb_lignes
-        self.__nb_colonnes = nb_colonnes
-        #self.__board = [[0] * self.__nb_colonnes] * self.__nb_colonnes
-
-        self.__board = [0] * nb_colonnes
-        for i in range(nb_colonnes):
-            self.__board[i] = [0] * nb_lignes
+    def __init__(self, nrows, ncols):
+        tiles=[]
+        for i in range(nrows):
+            for j in range(ncols):
+                tile=tile(0, 0)
+                tile.x=j
+                tile.y=i
+                tiles.append(tile)
+    
+    def get_value_matrix(self):
+        nrows, ncols=len(self._tiles), len(self._tiles[0])
+        value_matrix = [[0] *nrows] * nrows
+        for i in range(nrows):
+            for j in range(ncols):
+                if self._tiles[i][j].has_pawn():
+                    value_matrix[i][j]=self._tiles[i][j].self._tiles[i][j].pawn
 
     def add_pawn(self, x, y, color):
         board_matrix = self.__board
