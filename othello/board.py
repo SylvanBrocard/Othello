@@ -1,5 +1,7 @@
 from othello.pawn import Pawn
 from othello.tile import Tile
+from collections import Counter
+from othello.common import constants
 
 
 class Board():
@@ -95,17 +97,34 @@ class Board():
         '''
         pass
 
+    def get_all_pawns(self) -> list:
+        '''
+        Returns the list of all pawns
+        '''
+        return [
+            self.get_pawn(x,y)
+            for x in range(self.__nb_lignes)
+            for y in range(self.__nb_colonnes)
+            if self.has_pawn(x,y)
+            ]
+
     def count_pawns(self) -> int, int:
         '''
         Décompte les pions noirs et blancs
         '''
-        pass
+        color_counter = Counter([pawn.color for pawn in self.get_all_pawns])
+        return Counter[constants.symbol_black], Counter[constants.symbol_white]
 
     def empty_tiles(self) -> list:
         '''
         Renvoie la liste des tuiles vides
         '''
-        pass
+        return [
+            self.get_tile(x,y)
+            for x in range(self.__nb_lignes)
+            for y in range(self.__nb_colonnes)
+            if not self.has_pawn(x,y)
+        ]
 
 
 if __name__ == "__main__":

@@ -2,9 +2,10 @@ from othello.pawn import Pawn
 
 from pawn import *
 
+
 class tile():
 
-    def init(self,x,y):
+    def init(self, x, y):
         self.x = x
         self.y = y
         self.has_pawn = False
@@ -41,7 +42,6 @@ class tile():
     @pawn.setter
     def pawn(self, value):
         self.pawn = value
-
 
     def get_coordonates():
         return self.x, self.y
