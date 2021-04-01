@@ -1,11 +1,11 @@
-from board import board
+from othello.board import Board
 
 
 class Engine:
     def __init__(self):
         self.nb_colonnes = 8
         self.nb_lignes = 8
-        self.board = board(self.nb_lignes, self.nb_colonnes)
+        self.board = Board(self.nb_lignes, self.nb_colonnes)
         self.active_player = 'o'
 
     def start_game(self):

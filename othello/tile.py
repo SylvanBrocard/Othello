@@ -1,7 +1,7 @@
-from pawn import pawn
+from othello.pawn import Pawn
 
 
-class tile():
+class Tile():
 
     def __init__(self, x, y):
         self.x = x
@@ -13,4 +13,4 @@ class tile():
         return self.x, self.y
 
     def add_pawn(self,color):
-        self.pawn = pawn(color)
+        self.pawn = Pawn(color)

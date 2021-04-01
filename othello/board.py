@@ -1,8 +1,8 @@
-from pawn import *
-from tile import *
+from othello.pawn import pawn
+from othello.tile import Tile
 
 
-class board():
+class Board():
     def __init__(self, nb_lignes, nb_colonnes):
         self.__nb_lignes = nb_lignes
         self.__nb_colonnes = nb_colonnes
