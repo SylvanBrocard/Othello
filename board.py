@@ -99,6 +99,12 @@ class board():
         '''
         pass
 
+    def empty_tiles(self) -> list:
+        '''
+        Renvoie la liste des tuiles vides
+        '''
+        pass
+
 
 if __name__ == "__main__":
     m= board(8,8)
