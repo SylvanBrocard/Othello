@@ -1,5 +1,5 @@
-from othello.board import Board
-from othello.common import constants
+from board import Board
+from common import constants
 
 
 class Engine:
@@ -14,7 +14,8 @@ class Engine:
         Démarre une partie.
         '''
         self.initial_pawns()
-        while not self.is_finished:
+        while not self.is_finished():
+            self.board.display_board()
             self.play_move()
             self.switch_player()
         self.end_game()
@@ -25,8 +26,8 @@ class Engine:
         '''
         self.board.add_pawn(4, 4, constants.symbol_black)
         self.board.add_pawn(4, 5, constants.symbol_white)
-        self.board.add_pawn(5, 4, constants.symbol_black)
-        self.board.add_pawn(5, 5, constants.symbol_white)
+        self.board.add_pawn(5, 4, constants.symbol_white)
+        self.board.add_pawn(5, 5, constants.symbol_black)
 
     def switch_player(self):
         '''
@@ -59,8 +60,8 @@ class Engine:
         Reçoit le choix du joueur en cours
         '''
         move = input(
-            "Enter the rank and file where you want to drop your pawn (ex: 4 E): ")
-        move = move.split()
+            "Enter the rank and file where you want to drop your pawn (ex: E4): ")
+        move = list(move)
         return move
 
     def valid_move(self, move):
@@ -71,7 +72,7 @@ class Engine:
         if len(move) < 2:
             print("Oops!  That wasn't enough coordinates.  Try again...")
             return False
-        x, y = move
+        x, y = move[1], move[0]
         if not x.isdigit():
             print("Oops!  That was no valid rank.  Try again...")
             return False
@@ -86,7 +87,7 @@ class Engine:
         if not self.valid_coords(x, y):
             print("Oops!  That's outside the board.  Try again...")
             return False
-        move = x, y
+        move = y, x
         return True, move
 
     def resolve_move(self, move):
@@ -145,8 +146,7 @@ class Engine:
         '''
         Détermine si la partie est terminée
         '''
-        possible_moves = self.get_possible_moves()
-        return len(possible_moves) == 0
+        return len(self.get_possible_moves()) == 0
 
     def get_possible_moves(self):
         '''
@@ -155,9 +155,9 @@ class Engine:
         empty_tiles = self.board.empty_tiles()
         possible_moves = []
         for tile in empty_tiles:
-            flips = self.get_flips(tile.get_coordonates())
+            flips = self.get_flips(tile.x,tile.y)
             if len(flips) > 0:
-                possible_moves.append((tile.get_coordonates()))
+                possible_moves.append((tile.coordinates))
         return possible_moves
 
     def end_game(self):
@@ -171,6 +171,8 @@ class Engine:
             print("White wins the game !")
         else:
             print("Draw !")
+        print("Final board :")
+        self.board.display_board()
 
 
 if __name__ == "__main__":
@@ -178,6 +180,11 @@ if __name__ == "__main__":
     # x, y = engine.get_input()
     # print(x)
     # print(y)
-    engine.play_move()
+    # engine.play_move()
     # lettre = 'a'
     # print(lettre.isalpha())
+    # engine.start_game()
+    engine.initial_pawns()
+    print(engine.board.get_pawn(4,4).color)
+    print(engine.board.get_pawn(4,5).color)
+    # print(engine.get_flips(6,6))
