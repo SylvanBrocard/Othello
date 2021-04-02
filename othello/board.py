@@ -8,7 +8,8 @@ class Board():
     def __init__(self, nrows, ncols):
         self.nrows = nrows
         self.ncols = ncols
-        tilearray = [[Tile(x, y) for x in range(self.nrows)] for y in range(self.ncols)]
+        tilearray = [[Tile(x, y) for x in range(self.nrows)]
+                     for y in range(self.ncols)]
         # tilearray = []
         # for _ in range(ncols):
         #     tilecol = [Tile(0, 0) for _ in range(nrows)]
@@ -52,10 +53,19 @@ class Board():
             chaine += "\n" + str(i+1) + '|'
             for j in range(self.ncols):
                 chaine += " " + \
-                    str(self.tilearray[i][j].pawn.color).replace("0", " ") + " |"
+                    str(self.tilearray[i][j].pawn.color).replace(
+                        "0", " ") + " |"
             chaine += '\n' + ligne2
         return chaine
-
+    
+    @staticmethod
+    def get_move_string(possible_moves):
+        outstr='Possible moves:'
+        for move in possible_moves:
+            (x, y) = move
+            outstr= outstr+chr(ord('@')+y)+str(x)+" "
+        return outstr
+        
 
     @staticmethod
     def generate_display_matrix(position_matrix):
@@ -72,8 +82,14 @@ class Board():
             (locval[1])+string[indexes[locval[0]]+1:]
         return newstr
 
-    def display_board(self):
+    def display_board(self, possible_moves=[]):
+        
+        hints = possible_moves        
         mvals = self.get_value_matrix()
+        for i in range(len(mvals)):
+            for j in range(len(mvals[0])):
+                if (i, j) in hints:
+                    mvals[i][j]="?"
         m = self.generate_display_matrix(mvals)
         nrows, ncols = len(m), len(m[0])
         hline = "--------"*(ncols)+"-"
@@ -106,7 +122,12 @@ class Board():
             print(new)
             print(colseps)
             print(hline)
-        print("************Eval: %d ********** " %self.get_evaluation() )
+        whitescore, blackscore=self.count_pawns()
+
+        print(self.get_move_string(possible_moves))
+        print("*****Score: white: %d ; black: %d; current eval: %d ********** "  % (whitescore, blackscore, self.get_evaluation()))
+    
+
 
     def has_pawn(self, x, y) -> bool:
         '''
@@ -122,7 +143,7 @@ class Board():
         if self.get_tile(x, y).has_pawn:
             return self.get_tile(x, y).pawn
         else:
-            #return None
+            # return None
             raise ValueError("Tile has no pawn")
 
     def get_tile(self, x, y) -> Tile:
@@ -169,8 +190,8 @@ if __name__ == "__main__":
     m = Board(8, 8)
     m.add_pawn(3, 3, constants.symbol_black)
     m.add_pawn(2, 5, constants.symbol_white)
-    #print(m.get_pawn(3,3).color)
-    #print(m.get_pawn(1,5).color)
+    # print(m.get_pawn(3,3).color)
+    # print(m.get_pawn(1,5).color)
 
     # print(m.generate_display_matrix( m.get_value_matrix())[4][:])
     # print(m.generate_display_matrix( m.get_value_matrix())[5][:])

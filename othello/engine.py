@@ -15,7 +15,9 @@ class Engine:
         '''
         self.initial_pawns()
         while not self.is_finished():
-            self.board.display_board()
+            self.board.display_board(self.get_possible_moves())
+            print("Possible moves for current player :")
+            print(self.get_possible_moves())
             self.play_move()
             self.switch_player()
         self.end_game()
