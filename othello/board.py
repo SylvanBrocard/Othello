@@ -106,6 +106,7 @@ class Board():
             print(new)
             print(colseps)
             print(hline)
+        print("************Eval: %d ********** " %self.get_evaluation() )
 
     def has_pawn(self, x, y) -> bool:
         '''
@@ -150,7 +151,7 @@ class Board():
 
     def get_evaluation(self):
         count_black, count_white = self.count_pawns()
-        return count_white.value()-count_black.value()
+        return count_white-count_black
 
     def empty_tiles(self) -> list:
         '''

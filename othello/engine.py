@@ -24,10 +24,10 @@ class Engine:
         '''
         Sets initial board configuration
         '''
-        self.board.add_pawn(3, 3, constants.symbol_black)
-        self.board.add_pawn(3, 4, constants.symbol_white)
-        self.board.add_pawn(4, 3, constants.symbol_white)
-        self.board.add_pawn(4, 4, constants.symbol_black)
+        self.board.add_pawn(self.nb_lignes//2 -1, self.nb_colonnes//2-1, constants.symbol_black)
+        self.board.add_pawn(self.nb_lignes//2 -1, self.nb_colonnes//2, constants.symbol_white)
+        self.board.add_pawn(self.nb_lignes//2,    self.nb_colonnes//2-1, constants.symbol_white)
+        self.board.add_pawn(self.nb_lignes//2,    self.nb_colonnes//2, constants.symbol_black)
 
     def switch_player(self):
         '''
@@ -59,8 +59,12 @@ class Engine:
         '''
         Reçoit le choix du joueur en cours
         '''
+        if self.active_player == constants.symbol_black:
+            player = 'Black'
+        else:
+            player = 'White'
         move = input(
-            "Enter the rank and file where you want to drop your pawn (ex: E4): ")
+            "Enter the rank and file where you want to drop your pawn (ex: E4). " + player + " to move (" + self.active_player +")")
         move = list(move)
         return move
 
