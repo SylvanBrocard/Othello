@@ -1,4 +1,4 @@
-from common import constants
+from othello.common import constants
 
 class Pawn():
     def __init__(self, color):

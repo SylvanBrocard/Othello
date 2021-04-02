@@ -1,7 +1,7 @@
-from pawn import Pawn
-from tile import Tile
+from othello.pawn import Pawn
+from othello.tile import Tile
 from collections import Counter
-from common import constants
+from othello.common import constants
 
 
 class Board():
@@ -35,6 +35,13 @@ class Board():
         '''
         self.tilearray[x][y].pawn = Pawn(color)
         self.tilearray[x][y].has_pawn = True
+
+    def remove_pawn(self, x, y):
+        '''
+        Adds a pawn of color in the x,y tile
+        '''
+        if self.has_pawn(x, y):
+            self.tilearray[x][y].has_pawn=False
 
     def __str__(self):
         code = 65

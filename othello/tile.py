@@ -1,6 +1,4 @@
-from pawn import Pawn
-
-from pawn import *
+from othello.pawn import Pawn
 
 
 class Tile():
