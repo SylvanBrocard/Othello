@@ -15,7 +15,7 @@ class Pawn():
     @property
     def pvalue(self):
         if self.color==constants.symbol_black:
-            return 0
+            return -1
         if self.color==constants.symbol_white:
             return 1
 

@@ -24,10 +24,10 @@ class Engine:
         '''
         Sets initial board configuration
         '''
+        self.board.add_pawn(3, 3, constants.symbol_black)
+        self.board.add_pawn(3, 4, constants.symbol_white)
+        self.board.add_pawn(4, 3, constants.symbol_white)
         self.board.add_pawn(4, 4, constants.symbol_black)
-        self.board.add_pawn(4, 5, constants.symbol_white)
-        self.board.add_pawn(5, 4, constants.symbol_white)
-        self.board.add_pawn(5, 5, constants.symbol_black)
 
     def switch_player(self):
         '''
@@ -51,9 +51,9 @@ class Engine:
         valid = False
         while not valid:
             move = self.get_input()
-            valid, move = self.valid_move(move)
+            valid, x, y = self.valid_move(move)
             if valid:
-                valid = self.resolve_move(move)
+                valid = self.resolve_move((x,y))
 
     def get_input(self):
         '''
@@ -71,24 +71,24 @@ class Engine:
         '''
         if len(move) < 2:
             print("Oops!  That wasn't enough coordinates.  Try again...")
-            return False
+            return False, None, None
         x, y = move[1], move[0]
         if not x.isdigit():
             print("Oops!  That was no valid rank.  Try again...")
-            return False
+            return False, None, None
         x = int(x)
         if not y.isalpha():
             print("Oops!  That was no valid file.  Try again...")
-            return False
+            return False, None, None
         if y.isupper():
             y = ord(y) - 64
         else:
             y = ord(y) - 96
+        y, x = y-1, x-1
         if not self.valid_coords(x, y):
             print("Oops!  That's outside the board.  Try again...")
-            return False
-        move = y, x
-        return True, move
+            return False, None, None
+        return True, x, y
 
     def resolve_move(self, move):
         '''
@@ -115,6 +115,7 @@ class Engine:
         flips = []
         for direction_x in [-1, 0, 1]:
             for direction_y in [-1, 0, 1]:
+                # print("direction x = " + str(direction_x) + ", direction y = " + str(direction_y))
                 if not (direction_x == 0 and direction_y == 0):
                     search_finished = False
                     line_flips = []
@@ -123,9 +124,10 @@ class Engine:
                     while not search_finished:
                         x_search = x_search + direction_x
                         y_search = y_search + direction_y
+                        # print("x = " + str(x_search) +", y = " + str(y_search))
                         if (
-                            not self.board.has_pawn(x_search, y_search)
-                            or not self.valid_coords(x_search, y_search)
+                            not self.valid_coords(x_search, y_search)
+                            or not self.board.has_pawn(x_search, y_search)
                         ):
                             search_finished = True
                         elif self.board.get_pawn(x_search, y_search).color == self.active_player:
@@ -134,13 +136,14 @@ class Engine:
                         else:
                             line_flips.append(self.board.get_pawn(
                                 x_search, y_search))
+                    # print(line_flips)
         return flips
 
     def valid_coords(self, x, y):
         '''
         Vérifie que les coordonnées x, y sont dans le plateau
         '''
-        return 1 <= x <= self.nb_lignes and 1 <= y <= self.nb_colonnes
+        return 0 <= x <= self.nb_lignes-1 and 0 <= y <= self.nb_colonnes-1
 
     def is_finished(self):
         '''
@@ -153,10 +156,13 @@ class Engine:
         Renvoie la liste des coups possibles pour le joueur actif
         '''
         empty_tiles = self.board.empty_tiles()
+        # print("empty_tiles = " + str(empty_tiles))
         possible_moves = []
         for tile in empty_tiles:
+            # print(str(tile.x) + ", " + str(tile.y))
             flips = self.get_flips(tile.x,tile.y)
             if len(flips) > 0:
+                # print("move possible")
                 possible_moves.append((tile.coordinates))
         return possible_moves
 
@@ -183,8 +189,11 @@ if __name__ == "__main__":
     # engine.play_move()
     # lettre = 'a'
     # print(lettre.isalpha())
-    # engine.start_game()
-    engine.initial_pawns()
-    print(engine.board.get_pawn(4,4).color)
-    print(engine.board.get_pawn(4,5).color)
+    engine.start_game()
+    # engine.initial_pawns()
+    # print(engine.board.get_pawn(3,3).color)
+    # print(engine.board.get_pawn(3,4).color)
+    # print(engine.get_flips(3,5))
+    # print(engine.get_possible_moves())
     # print(engine.get_flips(6,6))
+    # print(engine.board.tilearray)

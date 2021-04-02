@@ -8,7 +8,7 @@ class Board():
     def __init__(self, nrows, ncols):
         self.nrows = nrows
         self.ncols = ncols
-        tilearray = [[Tile(0, 0) for _ in range(self.nrows)] for _ in range(self.ncols)]
+        tilearray = [[Tile(x, y) for x in range(self.nrows)] for y in range(self.ncols)]
         # tilearray = []
         # for _ in range(ncols):
         #     tilecol = [Tile(0, 0) for _ in range(nrows)]
@@ -25,11 +25,11 @@ class Board():
 
     def get_value_matrix(self):
         nrows, ncols = len(self.tilearray), len(self.tilearray[0])
-        value_matrix = [[0 for _ in range(nrows)] for _ in range(nrows)]
+        value_matrix = [['0' for _ in range(nrows)] for _ in range(nrows)]
         for i in range(nrows):
             for j in range(ncols):
                 if self.tilearray[i][j].has_pawn:
-                    value_matrix[i][j] = self.tilearray[i][j].pawn.pvalue
+                    value_matrix[i][j] = self.tilearray[i][j].pawn.color
         return value_matrix
 
     def add_pawn(self, x, y, color):
@@ -56,13 +56,14 @@ class Board():
             chaine += '\n' + ligne2
         return chaine
 
+
     @staticmethod
     def generate_display_matrix(position_matrix):
         nrows, ncols = len(position_matrix)+1, len(position_matrix[0])+1
         display_matrix = [[""] * nrows for i in range(ncols)]
         for i in range(1, nrows):
             for j in range(1, ncols):
-                display_matrix[i][j] = str(position_matrix[i-1][j-1])
+                display_matrix[i][j] = (position_matrix[i-1][j-1])
         return display_matrix
 
     @staticmethod
@@ -74,10 +75,7 @@ class Board():
     def display_board(self):
         mvals = self.get_value_matrix()
         m = self.generate_display_matrix(mvals)
-        print(m)
         nrows, ncols = len(m), len(m[0])
-        m = [["" for _ in range(nrows)] for _ in range(ncols)]
-
         hline = "--------"*(ncols)+"-"
         colseps = "|       "*(ncols)+"|"
         valueprints = "|   0   "*(ncols)+"|"
@@ -96,12 +94,11 @@ class Board():
         for ind in range(1, nrows):
             print(colseps)
             new = newstr[:indexes[0]]+str(ind)+newstr[indexes[0]+1:]
-            indbw = [[i, val] for i, val in enumerate(m[ind]) if val =="1"]
-            print(m[ind])
+            indbw = [[i, val] for i, val in enumerate(m[ind]) if val != ""]
             if indbw:
                 for locval in indbw:
                     new = Board.dstring(new, locval, indexes)
-            # new = new.replace("0", " ")
+            new = new.replace("0", " ")
             # new = new.replace("1", "X")
             # print("white")
             # new = new.replace("-1 ","O")
