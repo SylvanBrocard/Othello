@@ -10,10 +10,6 @@ class Board():
         self.ncols = ncols
         tilearray = [[Tile(x, y) for x in range(self.nrows)]
                      for y in range(self.ncols)]
-        # tilearray = []
-        # for _ in range(ncols):
-        #     tilecol = [Tile(0, 0) for _ in range(nrows)]
-        #     tilearray.append(tilecol)
         self._tilearray = tilearray
 
     @property
@@ -63,7 +59,7 @@ class Board():
         outstr='Possible moves:'
         for move in possible_moves:
             (x, y) = move
-            outstr= outstr+chr(ord('@')+y)+str(x)+" "
+            outstr= outstr+chr(ord('@')+x+1)+str(y+1)+" "
         return outstr
         
 

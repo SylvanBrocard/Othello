@@ -16,8 +16,8 @@ class Engine:
         self.initial_pawns()
         while not self.is_finished():
             self.board.display_board(self.get_possible_moves())
-            print("Possible moves for current player :")
-            print(self.get_possible_moves())
+            # print("Possible moves for current player :")
+            # print(self.get_possible_moves())
             self.play_move()
             self.switch_player()
         self.end_game()
@@ -26,10 +26,10 @@ class Engine:
         '''
         Sets initial board configuration
         '''
-        self.board.add_pawn(self.nb_lignes//2 -1, self.nb_colonnes//2-1, constants.symbol_black)
-        self.board.add_pawn(self.nb_lignes//2 -1, self.nb_colonnes//2, constants.symbol_white)
-        self.board.add_pawn(self.nb_lignes//2,    self.nb_colonnes//2-1, constants.symbol_white)
-        self.board.add_pawn(self.nb_lignes//2,    self.nb_colonnes//2, constants.symbol_black)
+        self.board.add_pawn(self.nb_colonnes//2 -1, self.nb_lignes//2-1, constants.symbol_black)
+        self.board.add_pawn(self.nb_colonnes//2 -1, self.nb_lignes//2, constants.symbol_white)
+        self.board.add_pawn(self.nb_colonnes//2,    self.nb_lignes//2-1, constants.symbol_white)
+        self.board.add_pawn(self.nb_colonnes//2,    self.nb_lignes//2, constants.symbol_black)
 
     def switch_player(self):
         '''
