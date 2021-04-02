@@ -4,21 +4,22 @@ from othello.tile import Tile
 
 class Board():
     def __init__(self, nrows, ncols):
-        tiles=[]
-        for i in range(nrows):
-            for j in range(ncols):
-                tile=tile(0, 0)
-                tile.x=j
-                tile.y=i
-                tiles.append(tile)
+        self.nrows = nrows
+        self.ncols = ncols
+
+    @property
+    def tiles(self):
+        tilearray= [[tile(0, 0)] *self.nrows] * self.ncols
+        return tilearray
     
     def get_value_matrix(self):
-        nrows, ncols=len(self._tiles), len(self._tiles[0])
+        nrows, ncols=len(self.tiles), len(self.tiles[0])
         value_matrix = [[0] *nrows] * nrows
         for i in range(nrows):
             for j in range(ncols):
-                if self._tiles[i][j].has_pawn():
-                    value_matrix[i][j]=self._tiles[i][j].self._tiles[i][j].pawn
+                if self.tiles[i][j].has_pawn:
+                    value_matrix[i][j]=self.tiles[i][j].pawn
+        return value_matrix
 
     def add_pawn(self, x, y, color):
         board_matrix = self.__board
@@ -58,8 +59,11 @@ class Board():
         return newstr
 
     def display_board(self):
-        m = board.generate_display_matrix(self.__board)
+        mvals = self.get_value_matrix()
+        m=self.generate_display_matrix(mvals)
         nrows, ncols = len(m), len(m[0])
+        m=[[""] * nrows for i in range(ncols)]
+        
         hline = "--------"*(ncols)+"-"
         colseps = "|       "*(ncols)+"|"
         valueprints = "|   0   "*(ncols)+"|"
@@ -81,7 +85,7 @@ class Board():
             indbw = [[i, val] for i, val in enumerate(m[ind]) if val != ""]
             if indbw:
                 for locval in indbw:
-                    new = board.dstring(new, locval, indexes)
+                    new = Board.dstring(new, locval, indexes)
             new = new.replace("0", " ")
             new = new.replace("x", "X")
             new = new.replace("o", "O")

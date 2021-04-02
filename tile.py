@@ -17,7 +17,6 @@ class tile():
     @property
     def y(self):
         return self._y
-
     @property
     def has_pawn(self):
         return self.has_pawn
