@@ -8,8 +8,8 @@ class Board():
     def __init__(self, nrows, ncols):
         self.nrows = nrows
         self.ncols = ncols
-        tilearray = [[Tile(x, y) for x in range(self.nrows)]
-                     for y in range(self.ncols)]
+        tilearray = [[Tile(x, y) for y in range(self.nrows)]
+                     for x in range(self.ncols)]
         self._tilearray = tilearray
 
     @property
@@ -38,10 +38,9 @@ class Board():
 
     def remove_pawn(self, x, y):
         '''
-        Adds a pawn of color in the x,y tile
+        Removes the pawn in the x,y tile
         '''
-        if self.has_pawn(x, y):
-            self.tilearray[x][y].has_pawn=False
+        self.tilearray[x][y].has_pawn = False
 
     def __str__(self):
         code = 65
@@ -60,15 +59,6 @@ class Board():
                         "0", " ") + " |"
             chaine += '\n' + ligne2
         return chaine
-    
-    @staticmethod
-    def get_move_string(possible_moves):
-        outstr='Possible moves:'
-        for move in possible_moves:
-            (x, y) = move
-            outstr= outstr+chr(ord('@')+y+1)+str(x+1)+" "
-        return outstr
-        
 
     @staticmethod
     def generate_display_matrix(position_matrix):
@@ -86,13 +76,13 @@ class Board():
         return newstr
 
     def display_board(self, possible_moves=[]):
-        
-        hints = possible_moves        
+
+        hints = possible_moves
         mvals = self.get_value_matrix()
         for i in range(len(mvals)):
             for j in range(len(mvals[0])):
                 if (i, j) in hints:
-                    mvals[i][j]="?"
+                    mvals[i][j] = "?"
         m = self.generate_display_matrix(mvals)
         nrows, ncols = len(m), len(m[0])
         hline = "--------"*(ncols)+"-"
@@ -125,12 +115,10 @@ class Board():
             print(new)
             print(colseps)
             print(hline)
-        whitescore, blackscore=self.count_pawns()
+        blackscore, whitescore = self.count_pawns()
 
-        print(self.get_move_string(possible_moves))
-        print("*****Score: white: %d ; black: %d; current eval: %d ********** "  % (whitescore, blackscore, self.get_evaluation()))
-    
-
+        print("*****Score: black: %d ; white: %d; current eval: %d ********** " %
+              (blackscore, whitescore, self.get_evaluation()))
 
     def has_pawn(self, x, y) -> bool:
         '''
@@ -175,7 +163,7 @@ class Board():
 
     def get_evaluation(self):
         count_black, count_white = self.count_pawns()
-        return count_white-count_black
+        return count_black-count_white
 
     def empty_tiles(self) -> list:
         '''

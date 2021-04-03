@@ -1,5 +1,6 @@
 from othello.board import Board
 from othello.common import constants
+from othello.common.converters import move_string
 
 
 class Engine:
@@ -15,19 +16,33 @@ class Engine:
         '''
         self.initial_pawns()
         while not self.is_finished():
-            self.board.display_board(self.get_possible_moves())
+            possible_moves = self.get_possible_moves()
+            self.board.display_board(possible_moves)
+            self.show_move_string(possible_moves)
             self.play_move()
             self.switch_player()
         self.end_game()
+
+    @staticmethod
+    def show_move_string(possible_moves):
+        outstr = 'Possible moves:'
+        for move in possible_moves:
+            x, y = move
+            outstr = outstr+" "+move_string(x, y)
+        print(outstr)
 
     def initial_pawns(self):
         '''
         Sets initial board configuration
         '''
-        self.board.add_pawn(self.nb_colonnes//2 -1, self.nb_lignes//2-1, constants.symbol_black)
-        self.board.add_pawn(self.nb_colonnes//2 -1, self.nb_lignes//2, constants.symbol_white)
-        self.board.add_pawn(self.nb_colonnes//2,    self.nb_lignes//2-1, constants.symbol_white)
-        self.board.add_pawn(self.nb_colonnes//2,    self.nb_lignes//2, constants.symbol_black)
+        self.board.add_pawn(self.nb_colonnes//2 - 1,
+                            self.nb_lignes//2-1, constants.symbol_black)
+        self.board.add_pawn(self.nb_colonnes//2 - 1,
+                            self.nb_lignes//2, constants.symbol_white)
+        self.board.add_pawn(self.nb_colonnes//2,
+                            self.nb_lignes//2-1, constants.symbol_white)
+        self.board.add_pawn(self.nb_colonnes//2,
+                            self.nb_lignes//2, constants.symbol_black)
 
     def switch_player(self):
         '''
@@ -53,7 +68,7 @@ class Engine:
             move = self.get_input()
             valid, x, y = self.valid_move(move)
             if valid:
-                valid = self.resolve_move((x,y))
+                valid = self.resolve_move((x, y))
 
     def get_input(self):
         '''
@@ -64,7 +79,8 @@ class Engine:
         else:
             player = 'White'
         move = input(
-            "Enter the rank and file where you want to drop your pawn (ex: E4). " + player + " to move (" + self.active_player +")")
+            "Enter the rank and file where you want to drop your pawn (ex: E4). "
+            + player + " to move (" + self.active_player + ") ")
         move = list(move)
         return move
 
@@ -164,7 +180,7 @@ class Engine:
         possible_moves = []
         for tile in empty_tiles:
             # print(str(tile.x) + ", " + str(tile.y))
-            flips = self.get_flips(tile.x,tile.y)
+            flips = self.get_flips(tile.x, tile.y)
             if len(flips) > 0:
                 # print("move possible")
                 possible_moves.append((tile.coordinates))
