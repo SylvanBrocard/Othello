@@ -66,7 +66,7 @@ class Board():
         outstr='Possible moves:'
         for move in possible_moves:
             (x, y) = move
-            outstr= outstr+chr(ord('@')+x+1)+str(y+1)+" "
+            outstr= outstr+chr(ord('@')+y+1)+str(x+1)+" "
         return outstr
         
 

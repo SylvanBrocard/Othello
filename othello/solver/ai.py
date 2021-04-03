@@ -41,11 +41,11 @@ class Ai_engine(Engine):
         '''
         Calcule le coup optimal
         '''
-        evaluation = self.alphabeta(constants.ai_tree_search_depth,float('-inf'),float('inf'))
+        evaluation = self.alphabeta(constants.ai_tree_search_depth,float('-inf'),float('inf'),is_top=True)
         x_ai, y_ai = self.bestMove
         return x_ai, y_ai, evaluation
 
-    def alphabeta(self,depth,alpha,beta):
+    def alphabeta(self,depth,alpha,beta, is_top=False):
         '''
         algorithme alphabeta
         '''
@@ -58,8 +58,10 @@ class Ai_engine(Engine):
             x, y = move
             flips = self.get_flips(x, y)
             self.resolve_move(move)
+            self.switch_player()
             score = -self.alphabeta(depth-1, -beta, -alpha)
             self.unresolve_move(move,flips)
+            self.switch_player()
             if (score >= alpha):
                 alpha = score
                 self.bestMove = move

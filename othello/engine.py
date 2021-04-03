@@ -103,13 +103,13 @@ class Engine:
         if self.board.has_pawn(x, y):
             print("Oops!  There's already a pawn here.  Try again...")
             return False
-        self.board.add_pawn(x, y, self.active_player)
         flips = self.get_flips(x, y)
         if len(flips) == 0:
             print("Oops!  That move doesn't flip any pawn.  Try again...")
             return False
         for pawn in flips:
             pawn.reverse_pawn()
+        self.board.add_pawn(x, y, self.active_player)
         return True
 
     def get_flips(self, x, y):
