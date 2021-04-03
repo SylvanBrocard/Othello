@@ -1,6 +1,8 @@
 from othello.board import Board
 from othello.common import constants
 from othello.common.converters import move_string
+from othello.common.utilities import cls
+from IPython.display import clear_output
 
 
 class Engine:
@@ -21,6 +23,8 @@ class Engine:
             self.show_move_string(possible_moves)
             self.play_move()
             self.switch_player()
+            clear_output(wait=True)
+            cls()
         self.end_game()
 
     @staticmethod

@@ -1,7 +1,8 @@
 from othello.engine import Engine
 from othello.common import constants
 from othello.common.converters import move_string
-
+from IPython.display import clear_output
+from othello.common.utilities import cls
 
 class Ai_engine(Engine):
     def __init__(self):
@@ -15,10 +16,14 @@ class Ai_engine(Engine):
         '''
         self.initial_pawns()
         while not Engine.is_finished(self):
-            self.board.display_board(self.get_possible_moves())
+            possible_moves = self.get_possible_moves()
+            self.board.display_board(possible_moves)
+            self.show_move_string(possible_moves)
             self.show_ai_move()
             self.play_move()
             self.switch_player()
+            clear_output(wait=True)
+            cls()
         self.end_game()
 
     def show_ai_move(self):

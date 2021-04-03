@@ -1,5 +1,4 @@
 from othello import game
 
 if __name__=='__main__':
-    # game.run()
-    pass
+    game.run()
